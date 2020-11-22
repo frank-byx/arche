@@ -1,7 +1,7 @@
 {
   "name": "arche",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "concurrently -r \"npx next dev\" \"npx graphql-codegen --watch\"",
     "build": "next build",
