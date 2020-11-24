@@ -41,5 +41,3 @@ migration 20201119000235-create-recipe..20201119000447
 +    body   String
 +}
 ```
-
-

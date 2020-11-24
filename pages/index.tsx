@@ -1,37 +1,48 @@
+import { Button, Grid, Typography } from "@material-ui/core"
 import Head from "next/head"
 import Link from "next/link"
-import styles from "../styles/Home.module.css"
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Arches</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          - Arches -
-        </h1>
-
-        <div className={styles.grid}>
-          <Link href="/recipeLog"><a>
-            <h3 className={styles.card}>
-            Recipe Log
-            </h3>
-          </a></Link>
-          <Link href="/"><a>
-            <h3 className={styles.card}>
-            Flavor Combinator
-            </h3>
-          </a></Link>
-        </div>
+      <main>
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+          spacing={2}
+          style={{ minHeight: "100vh" }}
+        >
+          <Grid item>
+            <Link href="/recipeLog">
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ minWidth: "30vw" }}
+              >
+                <h3>Recipe Log</h3>
+              </Button>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link href="/">
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ minWidth: "30vw" }}
+              >
+                <h3>Flavor Combinator</h3>
+              </Button>
+            </Link>
+          </Grid>
+        </Grid>
       </main>
-
-      <footer className={styles.footer}>
-        <Link href="/"><a className={styles.card}>Login</a></Link>
-      </footer>
     </div>
   )
 }
