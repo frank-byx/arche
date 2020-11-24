@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import "../styles/globals.css"
 import React from "react"
 import { withUrqlClient, NextUrqlAppContext} from "next-urql"
 import App, { AppProps, AppContext } from "next/app"

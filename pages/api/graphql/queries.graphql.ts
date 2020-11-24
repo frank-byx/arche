@@ -1,6 +1,6 @@
 import gql from "graphql-tag"
 
-const RecipesQuery = gql`
+const AllRecipesQuery = gql`
     query allRecipes {
         recipes {
             id

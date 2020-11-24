@@ -1,0 +1,6 @@
+node_modules
+.next
+generated
+nexus.ts
+next-env.d.ts
+schema.graphql
