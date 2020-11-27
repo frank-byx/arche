@@ -19,6 +19,29 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  DateTimeFieldUpdateOperationsInput: { // input type
+    set?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  DateTimeFilter: { // input type
+    equals?: NexusGenScalars['DateTime'] | null; // DateTime
+    gt?: NexusGenScalars['DateTime'] | null; // DateTime
+    gte?: NexusGenScalars['DateTime'] | null; // DateTime
+    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+    lt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lte?: NexusGenScalars['DateTime'] | null; // DateTime
+    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
+    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+  }
+  NestedDateTimeFilter: { // input type
+    equals?: NexusGenScalars['DateTime'] | null; // DateTime
+    gt?: NexusGenScalars['DateTime'] | null; // DateTime
+    gte?: NexusGenScalars['DateTime'] | null; // DateTime
+    in?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+    lt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lte?: NexusGenScalars['DateTime'] | null; // DateTime
+    not?: NexusGenInputs['NestedDateTimeFilter'] | null; // NestedDateTimeFilter
+    notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
+  }
   NestedStringFilter: { // input type
     contains?: string | null; // String
     endsWith?: string | null; // String
@@ -34,26 +57,34 @@ export interface NexusGenInputs {
   }
   RecipeCreateInput: { // input type
     body: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     title: string; // String!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   RecipeOrderByInput: { // input type
     body?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
     title?: NexusGenEnums['SortOrder'] | null; // SortOrder
+    updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   RecipeUpdateInput: { // input type
     body?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
   }
   RecipeWhereInput: { // input type
     AND?: NexusGenInputs['RecipeWhereInput'][] | null; // [RecipeWhereInput!]
     body?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
     NOT?: NexusGenInputs['RecipeWhereInput'][] | null; // [RecipeWhereInput!]
     OR?: NexusGenInputs['RecipeWhereInput'][] | null; // [RecipeWhereInput!]
     title?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
   }
   RecipeWhereUniqueInput: { // input type
     id?: string | null; // String
@@ -89,6 +120,7 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenRootTypes {
@@ -96,12 +128,17 @@ export interface NexusGenRootTypes {
   Query: {};
   Recipe: { // root type
     body: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     title: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  DateTimeFieldUpdateOperationsInput: NexusGenInputs['DateTimeFieldUpdateOperationsInput'];
+  DateTimeFilter: NexusGenInputs['DateTimeFilter'];
+  NestedDateTimeFilter: NexusGenInputs['NestedDateTimeFilter'];
   NestedStringFilter: NexusGenInputs['NestedStringFilter'];
   RecipeCreateInput: NexusGenInputs['RecipeCreateInput'];
   RecipeOrderByInput: NexusGenInputs['RecipeOrderByInput'];
@@ -117,6 +154,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   Float: NexusGenScalars['Float'];
   Boolean: NexusGenScalars['Boolean'];
   ID: NexusGenScalars['ID'];
+  DateTime: NexusGenScalars['DateTime'];
 }
 
 export interface NexusGenFieldTypes {
@@ -131,8 +169,10 @@ export interface NexusGenFieldTypes {
   }
   Recipe: { // field return type
     body: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     title: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
 }
 
@@ -148,8 +188,10 @@ export interface NexusGenFieldTypeNames {
   }
   Recipe: { // field return type name
     body: 'String'
+    createdAt: 'DateTime'
     id: 'String'
     title: 'String'
+    updatedAt: 'DateTime'
   }
 }
 
@@ -188,13 +230,13 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Mutation" | "Query" | "Recipe";
 
-export type NexusGenInputNames = "NestedStringFilter" | "RecipeCreateInput" | "RecipeOrderByInput" | "RecipeUpdateInput" | "RecipeWhereInput" | "RecipeWhereUniqueInput" | "StringFieldUpdateOperationsInput" | "StringFilter";
+export type NexusGenInputNames = "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "NestedDateTimeFilter" | "NestedStringFilter" | "RecipeCreateInput" | "RecipeOrderByInput" | "RecipeUpdateInput" | "RecipeWhereInput" | "RecipeWhereUniqueInput" | "StringFieldUpdateOperationsInput" | "StringFilter";
 
 export type NexusGenEnumNames = "QueryMode" | "SortOrder";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
 
 export type NexusGenUnionNames = never;
 

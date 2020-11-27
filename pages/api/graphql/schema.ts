@@ -8,6 +8,8 @@ const Recipe = objectType({
     t.model.id()
     t.model.title()
     t.model.body()
+    t.model.createdAt()
+    t.model.updatedAt()
   },
 })
 

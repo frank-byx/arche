@@ -13,19 +13,34 @@ import {
   ListItem,
   ListItemText,
   InputBase,
+  Button,
+  ButtonGroup,
+  Divider,
 } from "@material-ui/core"
-import { ChevronLeft, Search, Menu } from "@material-ui/icons"
+import {
+  ChevronLeft,
+  Search,
+  Menu,
+  Edit,
+  Save,
+  Close,
+  Delete,
+  Info,
+  Cancel,
+  Add,
+} from "@material-ui/icons"
 import { fade } from "@material-ui/core/styles"
 import clsx from "clsx"
-import { useAllRecipesQuery } from "../generated/graphql"
+import { useRecipeSearchQuery, useRecipeInfoQuery } from "../generated/graphql"
 
-const DRAWER_WIDTH = 300
+const DRAWER_WIDTH = 512
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
       overflow: "hidden",
+      flexgrow: 1,
     },
     hide: {
       display: "none",
@@ -39,6 +54,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: theme.spacing(2),
+    },
+    toolbar: {
+      display: "flex",
+      justifyContent: "space-between",
     },
     drawer: {
       width: DRAWER_WIDTH,
@@ -64,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "left",
     },
     drawerBody: {
-      overflowY: "scroll",
+      overflowY: "auto",
       paddingLeft: theme.spacing(1),
     },
     content: {
@@ -106,14 +125,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function RecipeLog() {
   const classes = useStyles()
-  const [drawerIsOpen, setDrawerIsOpen] = React.useState(false)
-  const [{ data, fetching, error }] = useAllRecipesQuery()
+  const [drawerIsOpen, setDrawerIsOpen] = React.useState(true)
+  const [editMode, setEditMode] = React.useState(false)
+  const [currentRecipe, setCurrentRecipe] = React.useState("")
 
-  if (fetching) {
-    return <p>Fetching</p>
+  const [searchString, setSearchString] = React.useState("")
+  const [searchResults] = useRecipeSearchQuery({
+    variables: { contains: searchString },
+  })
+  if (searchResults.error) {
+    return <p>Error: {searchResults.error.message}</p>
   }
-  if (error) {
-    return <p>Error: {error.message}</p>
+
+  const [recipeInfoResults] = useRecipeInfoQuery({
+    variables: { id: currentRecipe },
+  })
+  if (recipeInfoResults.error) {
+    return <p>Error: {recipeInfoResults.error.message}</p>
   }
 
   return (
@@ -131,31 +159,77 @@ export default function RecipeLog() {
           })}
           elevation={0}
         >
-          <Toolbar>
-            <IconButton
-              onClick={() => {
-                setDrawerIsOpen(true)
-              }}
-              className={clsx(classes.menuButton, drawerIsOpen && classes.hide)}
-              edge="start"
-              color="inherit"
-            >
-              <Menu />
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                setDrawerIsOpen(false)
-              }}
-              className={clsx(
-                classes.menuButton,
-                !drawerIsOpen && classes.hide
-              )}
-              edge="start"
-              color="inherit"
-            >
-              <ChevronLeft />
-            </IconButton>
-            <Typography>INSERT RECIPE NAME</Typography>
+          <Toolbar className={classes.toolbar}>
+            <div>
+              <IconButton
+                onClick={() => {
+                  setDrawerIsOpen(true)
+                }}
+                className={clsx(
+                  classes.menuButton,
+                  drawerIsOpen && classes.hide
+                )}
+                edge="start"
+                color="inherit"
+              >
+                <Search />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  setDrawerIsOpen(false)
+                }}
+                className={clsx(
+                  classes.menuButton,
+                  !drawerIsOpen && classes.hide
+                )}
+                edge="start"
+                color="inherit"
+              >
+                <ChevronLeft />
+              </IconButton>
+              <Button variant="outlined" color="inherit">
+                New Recipe
+              </Button>
+            </div>
+            <Typography>
+              {recipeInfoResults.data?.recipe
+                ? recipeInfoResults.data?.recipe.title
+                : ""}
+            </Typography>
+            <div className={!recipeInfoResults.data?.recipe && classes.hide}>
+              <div className={editMode && classes.hide}>
+                <IconButton color="inherit">
+                  <Info />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    setEditMode(true)
+                  }}
+                >
+                  <Edit />
+                </IconButton>
+                <IconButton color="inherit">
+                  <Delete />
+                </IconButton>
+                <IconButton color="inherit">
+                  <Close />
+                </IconButton>
+              </div>
+              <div className={!editMode && classes.hide}>
+                <IconButton color="inherit">
+                  <Save />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    setEditMode(false)
+                  }}
+                >
+                  <Cancel />
+                </IconButton>
+              </div>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -173,20 +247,31 @@ export default function RecipeLog() {
               <div className={classes.searchIcon}>
                 <Search />
               </div>
-              <InputBase
-                placeholder="Search Recipes…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
+              <form>
+                <InputBase
+                  placeholder="Search Recipes…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  value={searchString}
+                  onChange={(event) => {
+                    setSearchString(event.target.value)
+                  }}
+                />
+              </form>
             </div>
           </div>
           <div className={classes.drawerBody}>
             <List>
-              {data?.recipes.map((recipe) => (
-                <ListItem button key={recipe.id}>
+              {searchResults.data?.recipes.map((recipe) => (
+                <ListItem
+                  button
+                  key={recipe.id}
+                  onClick={(event) => {
+                    setCurrentRecipe(recipe.id)
+                  }}
+                >
                   <ListItemText primary={recipe.title} />
                 </ListItem>
               ))}
@@ -200,10 +285,22 @@ export default function RecipeLog() {
         >
           <div className={classes.headerPlaceholder} />
           <InputBase
-            defaultValue="Lorem ipsum dolor sit amet."
+            key={currentRecipe + (editMode ? "edit" : "view")}
+            defaultValue={
+              recipeInfoResults.data?.recipe
+                ? recipeInfoResults.data?.recipe.body
+                : ""
+            }
             fullWidth
             multiline
+            disabled={!editMode}
+            className={!editMode && classes.hide}
           />
+          <Typography className={editMode && classes.hide}>
+            {recipeInfoResults.data?.recipe
+              ? recipeInfoResults.data?.recipe.body
+              : ""}
+          </Typography>
         </main>
       </div>
     </div>

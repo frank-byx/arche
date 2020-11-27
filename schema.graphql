@@ -2,10 +2,38 @@
 ### Do not make changes to this file directly
 
 
+scalar DateTime
+
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
 type Mutation {
   createOneRecipe(data: RecipeCreateInput!): Recipe!
   deleteOneRecipe(where: RecipeWhereUniqueInput!): Recipe
   updateOneRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
 }
 
 input NestedStringFilter {
@@ -34,35 +62,45 @@ enum QueryMode {
 
 type Recipe {
   body: String!
+  createdAt: DateTime!
   id: String!
   title: String!
+  updatedAt: DateTime!
 }
 
 input RecipeCreateInput {
   body: String!
+  createdAt: DateTime
   id: String
   title: String!
+  updatedAt: DateTime
 }
 
 input RecipeOrderByInput {
   body: SortOrder
+  createdAt: SortOrder
   id: SortOrder
   title: SortOrder
+  updatedAt: SortOrder
 }
 
 input RecipeUpdateInput {
   body: StringFieldUpdateOperationsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
+  updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
 input RecipeWhereInput {
   AND: [RecipeWhereInput!]
   body: StringFilter
+  createdAt: DateTimeFilter
   id: StringFilter
   NOT: [RecipeWhereInput!]
   OR: [RecipeWhereInput!]
   title: StringFilter
+  updatedAt: DateTimeFilter
 }
 
 input RecipeWhereUniqueInput {

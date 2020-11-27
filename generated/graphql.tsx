@@ -10,6 +10,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
 };
 
 export type Recipe = {
@@ -17,6 +18,8 @@ export type Recipe = {
   id: Scalars['String'];
   title: Scalars['String'];
   body: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
 };
 
 export type Query = {
@@ -63,6 +66,7 @@ export type MutationUpdateOneRecipeArgs = {
   where: RecipeWhereUniqueInput;
 };
 
+
 export type RecipeWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
@@ -75,24 +79,32 @@ export type RecipeWhereInput = {
   id?: Maybe<StringFilter>;
   title?: Maybe<StringFilter>;
   body?: Maybe<StringFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<DateTimeFilter>;
 };
 
 export type RecipeOrderByInput = {
   id?: Maybe<SortOrder>;
   title?: Maybe<SortOrder>;
   body?: Maybe<SortOrder>;
+  createdAt?: Maybe<SortOrder>;
+  updatedAt?: Maybe<SortOrder>;
 };
 
 export type RecipeCreateInput = {
   id?: Maybe<Scalars['String']>;
   title: Scalars['String'];
   body: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type RecipeUpdateInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
   body?: Maybe<StringFieldUpdateOperationsInput>;
+  createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
+  updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type StringFilter = {
@@ -110,6 +122,17 @@ export type StringFilter = {
   not?: Maybe<NestedStringFilter>;
 };
 
+export type DateTimeFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<NestedDateTimeFilter>;
+};
+
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
@@ -117,6 +140,10 @@ export enum SortOrder {
 
 export type StringFieldUpdateOperationsInput = {
   set?: Maybe<Scalars['String']>;
+};
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Maybe<Scalars['DateTime']>;
 };
 
 export enum QueryMode {
@@ -138,28 +165,68 @@ export type NestedStringFilter = {
   not?: Maybe<NestedStringFilter>;
 };
 
-export type AllRecipesQueryVariables = Exact<{ [key: string]: never; }>;
+export type NestedDateTimeFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<NestedDateTimeFilter>;
+};
+
+export type RecipeSearchQueryVariables = Exact<{
+  contains: Scalars['String'];
+}>;
 
 
-export type AllRecipesQuery = (
+export type RecipeSearchQuery = (
   { __typename?: 'Query' }
   & { recipes: Array<(
     { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id' | 'title' | 'body'>
+    & Pick<Recipe, 'id' | 'title'>
+  )> }
+);
+
+export type RecipeInfoQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type RecipeInfoQuery = (
+  { __typename?: 'Query' }
+  & { recipe?: Maybe<(
+    { __typename?: 'Recipe' }
+    & Pick<Recipe, 'id' | 'title' | 'body' | 'createdAt' | 'updatedAt'>
   )> }
 );
 
 
-export const AllRecipesDocument = gql`
-    query allRecipes {
-  recipes {
+export const RecipeSearchDocument = gql`
+    query recipeSearch($contains: String!) {
+  recipes(where: {title: {contains: $contains}}, orderBy: {updatedAt: desc}) {
     id
     title
-    body
   }
 }
     `;
 
-export function useAllRecipesQuery(options: Omit<Urql.UseQueryArgs<AllRecipesQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<AllRecipesQuery>({ query: AllRecipesDocument, ...options });
+export function useRecipeSearchQuery(options: Omit<Urql.UseQueryArgs<RecipeSearchQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<RecipeSearchQuery>({ query: RecipeSearchDocument, ...options });
+};
+export const RecipeInfoDocument = gql`
+    query recipeInfo($id: String!) {
+  recipe(where: {id: $id}) {
+    id
+    title
+    body
+    createdAt
+    updatedAt
+  }
+}
+    `;
+
+export function useRecipeInfoQuery(options: Omit<Urql.UseQueryArgs<RecipeInfoQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<RecipeInfoQuery>({ query: RecipeInfoDocument, ...options });
 };
