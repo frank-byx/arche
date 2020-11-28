@@ -31,7 +31,13 @@ import {
 } from "@material-ui/icons"
 import { fade } from "@material-ui/core/styles"
 import clsx from "clsx"
-import { useRecipeSearchQuery, useRecipeInfoQuery } from "../generated/graphql"
+import {
+  useRecipeSearchQuery,
+  useRecipeInfoQuery,
+  useUpdateRecipeMutation,
+  useCreateRecipeMutation,
+  useDeleteRecipeMutation,
+} from "../generated/graphql"
 
 const DRAWER_WIDTH = 512
 
@@ -128,7 +134,8 @@ export default function RecipeLog() {
   const [drawerIsOpen, setDrawerIsOpen] = React.useState(true)
   const [editMode, setEditMode] = React.useState(false)
   const [currentRecipe, setCurrentRecipe] = React.useState("")
-
+  const [editedTitle, setEditedTitle] = React.useState("")
+  const [editedBody, setEditedBody] = React.useState("")
   const [searchString, setSearchString] = React.useState("")
   const [searchResults] = useRecipeSearchQuery({
     variables: { contains: searchString },
@@ -143,6 +150,10 @@ export default function RecipeLog() {
   if (recipeInfoResults.error) {
     return <p>Error: {recipeInfoResults.error.message}</p>
   }
+
+  const [updateRecipeResults, updateRecipe] = useUpdateRecipeMutation()
+  const [createRecipeResults, createRecipe] = useCreateRecipeMutation()
+  const [deleteRecipeResults, deleteRecipe] = useDeleteRecipeMutation()
 
   return (
     <div>
@@ -187,15 +198,32 @@ export default function RecipeLog() {
               >
                 <ChevronLeft />
               </IconButton>
-              <Button variant="outlined" color="inherit">
+              <Button
+                variant="outlined"
+                color="inherit"
+                onClick={() => {
+                  createRecipe({
+                    title: "New Recipe",
+                    body: "",
+                  }).then((results) => {})
+                }}
+              >
                 New Recipe
               </Button>
             </div>
-            <Typography>
-              {recipeInfoResults.data?.recipe
+            <Typography className={editMode && classes.hide}>
+              {currentRecipe && recipeInfoResults.data?.recipe
                 ? recipeInfoResults.data?.recipe.title
                 : ""}
             </Typography>
+            <InputBase
+              value={editedTitle}
+              onChange={(event) => {
+                setEditedTitle(event.target.value)
+              }}
+              className={!editMode && classes.hide}
+              inputProps={{ style: { color: "white" } }}
+            />
             <div className={!recipeInfoResults.data?.recipe && classes.hide}>
               <div className={editMode && classes.hide}>
                 <IconButton color="inherit">
@@ -204,20 +232,44 @@ export default function RecipeLog() {
                 <IconButton
                   color="inherit"
                   onClick={() => {
+                    setEditedTitle(recipeInfoResults.data?.recipe.title)
+                    setEditedBody(recipeInfoResults.data?.recipe.body)
                     setEditMode(true)
                   }}
                 >
                   <Edit />
                 </IconButton>
-                <IconButton color="inherit">
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    deleteRecipe({ id: currentRecipe }).then(() => {
+                      setCurrentRecipe("")
+                    })
+                  }}
+                >
                   <Delete />
                 </IconButton>
-                <IconButton color="inherit">
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    setCurrentRecipe("")
+                  }}
+                >
                   <Close />
                 </IconButton>
               </div>
               <div className={!editMode && classes.hide}>
-                <IconButton color="inherit">
+                <IconButton
+                  color="inherit"
+                  onClick={() => {
+                    updateRecipe({
+                      id: currentRecipe,
+                      title: editedTitle,
+                      body: editedBody,
+                    })
+                    setEditMode(false)
+                  }}
+                >
                   <Save />
                 </IconButton>
                 <IconButton
@@ -268,7 +320,8 @@ export default function RecipeLog() {
                 <ListItem
                   button
                   key={recipe.id}
-                  onClick={(event) => {
+                  onClick={() => {
+                    setEditMode(false)
                     setCurrentRecipe(recipe.id)
                   }}
                 >
@@ -285,19 +338,16 @@ export default function RecipeLog() {
         >
           <div className={classes.headerPlaceholder} />
           <InputBase
-            key={currentRecipe + (editMode ? "edit" : "view")}
-            defaultValue={
-              recipeInfoResults.data?.recipe
-                ? recipeInfoResults.data?.recipe.body
-                : ""
-            }
+            value={editedBody}
+            onChange={(event) => {
+              setEditedBody(event.target.value)
+            }}
             fullWidth
             multiline
-            disabled={!editMode}
             className={!editMode && classes.hide}
           />
           <Typography className={editMode && classes.hide}>
-            {recipeInfoResults.data?.recipe
+            {currentRecipe && recipeInfoResults.data?.recipe
               ? recipeInfoResults.data?.recipe.body
               : ""}
           </Typography>

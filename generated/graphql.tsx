@@ -202,6 +202,48 @@ export type RecipeInfoQuery = (
   )> }
 );
 
+export type UpdateRecipeMutationVariables = Exact<{
+  id: Scalars['String'];
+  title: Scalars['String'];
+  body: Scalars['String'];
+}>;
+
+
+export type UpdateRecipeMutation = (
+  { __typename?: 'Mutation' }
+  & { updateOneRecipe?: Maybe<(
+    { __typename?: 'Recipe' }
+    & Pick<Recipe, 'id' | 'updatedAt'>
+  )> }
+);
+
+export type CreateRecipeMutationVariables = Exact<{
+  title: Scalars['String'];
+  body: Scalars['String'];
+}>;
+
+
+export type CreateRecipeMutation = (
+  { __typename?: 'Mutation' }
+  & { createOneRecipe: (
+    { __typename?: 'Recipe' }
+    & Pick<Recipe, 'id' | 'createdAt'>
+  ) }
+);
+
+export type DeleteRecipeMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteRecipeMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteOneRecipe?: Maybe<(
+    { __typename?: 'Recipe' }
+    & Pick<Recipe, 'id'>
+  )> }
+);
+
 
 export const RecipeSearchDocument = gql`
     query recipeSearch($contains: String!) {
@@ -229,4 +271,42 @@ export const RecipeInfoDocument = gql`
 
 export function useRecipeInfoQuery(options: Omit<Urql.UseQueryArgs<RecipeInfoQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<RecipeInfoQuery>({ query: RecipeInfoDocument, ...options });
+};
+export const UpdateRecipeDocument = gql`
+    mutation updateRecipe($id: String!, $title: String!, $body: String!) {
+  updateOneRecipe(
+    where: {id: $id}
+    data: {title: {set: $title}, body: {set: $body}}
+  ) {
+    id
+    updatedAt
+  }
+}
+    `;
+
+export function useUpdateRecipeMutation() {
+  return Urql.useMutation<UpdateRecipeMutation, UpdateRecipeMutationVariables>(UpdateRecipeDocument);
+};
+export const CreateRecipeDocument = gql`
+    mutation createRecipe($title: String!, $body: String!) {
+  createOneRecipe(data: {title: $title, body: $body}) {
+    id
+    createdAt
+  }
+}
+    `;
+
+export function useCreateRecipeMutation() {
+  return Urql.useMutation<CreateRecipeMutation, CreateRecipeMutationVariables>(CreateRecipeDocument);
+};
+export const DeleteRecipeDocument = gql`
+    mutation deleteRecipe($id: String!) {
+  deleteOneRecipe(where: {id: $id}) {
+    id
+  }
+}
+    `;
+
+export function useDeleteRecipeMutation() {
+  return Urql.useMutation<DeleteRecipeMutation, DeleteRecipeMutationVariables>(DeleteRecipeDocument);
 };
