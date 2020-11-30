@@ -69,7 +69,6 @@ export type MutationUpdateOneRecipeArgs = {
 
 export type RecipeWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
 };
 
 export type RecipeWhereInput = {

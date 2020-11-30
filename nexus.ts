@@ -88,7 +88,6 @@ export interface NexusGenInputs {
   }
   RecipeWhereUniqueInput: { // input type
     id?: string | null; // String
-    title?: string | null; // String
   }
   StringFieldUpdateOperationsInput: { // input type
     set?: string | null; // String

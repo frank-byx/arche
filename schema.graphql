@@ -105,7 +105,6 @@ input RecipeWhereInput {
 
 input RecipeWhereUniqueInput {
   id: String
-  title: String
 }
 
 enum SortOrder {
