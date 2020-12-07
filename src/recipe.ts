@@ -7,9 +7,9 @@ import Urql from "urql"
 import { Dispatch, useReducer } from "react"
 
 export enum Units {
-  Grams,
-  Kilograms,
-  Units,
+  Grams = "g",
+  Kilograms = "kg",
+  Units = "",
 }
 
 export type Ingredient = {

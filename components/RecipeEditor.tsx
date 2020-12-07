@@ -1,5 +1,5 @@
 import React from "react"
-import { Typography, makeStyles, Theme, createStyles } from "@material-ui/core"
+import { makeStyles, Theme, createStyles } from "@material-ui/core"
 import clsx from "clsx"
 import { useRecipeLogQuery } from "../generated/graphql"
 
@@ -9,6 +9,7 @@ import useRecipeReducer, {
   Recipe,
 } from "../src/recipe"
 import RecipeInput from "./RecipeInput"
+import RecipeViewer from "./RecipeViewer"
 
 type Props = {
   drawerIsOpen: boolean
@@ -67,6 +68,10 @@ export default function RecipeEditor(props: Props) {
     editedRecipeDispatch,
   }
 
+  const recipeViewerProps = {
+    currentRecipeID: props.currentRecipeID,
+  }
+
   return (
     <>
       <RecipeEditorAppBar {...recipeEditorAppBarProps} />
@@ -79,9 +84,9 @@ export default function RecipeEditor(props: Props) {
         <div className={!props.editMode ? classes.hide : undefined}>
           <RecipeInput {...recipeInputProps} />
         </div>
-        <Typography className={props.editMode ? classes.hide : undefined}>
-          {props.currentRecipeID ? JSON.stringify(currentRecipe) : ""}
-        </Typography>
+        <div className={props.editMode ? classes.hide : undefined}>
+          <RecipeViewer {...recipeViewerProps} />
+        </div>
       </div>
     </>
   )

@@ -24,6 +24,15 @@ const RecipeLogQuery = gql`
   }
 `
 
+const RenderRecipeLogQuery = gql`
+  query renderRecipeLog($id: String!) {
+    recipeLog(where: { id: $id }) {
+      id
+      render
+    }
+  }
+`
+
 const UpdateRecipeLogMutation = gql`
   mutation updateRecipeLog($id: String!, $title: String!, $body: Json!) {
     updateOneRecipeLog(

@@ -21,6 +21,7 @@ export type RecipeLog = {
   body: Scalars['Json'];
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
+  render?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -202,6 +203,19 @@ export type RecipeLogQuery = (
   )> }
 );
 
+export type RenderRecipeLogQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type RenderRecipeLogQuery = (
+  { __typename?: 'Query' }
+  & { recipeLog?: Maybe<(
+    { __typename?: 'RecipeLog' }
+    & Pick<RecipeLog, 'id' | 'render'>
+  )> }
+);
+
 export type UpdateRecipeLogMutationVariables = Exact<{
   id: Scalars['String'];
   title: Scalars['String'];
@@ -271,6 +285,18 @@ export const RecipeLogDocument = gql`
 
 export function useRecipeLogQuery(options: Omit<Urql.UseQueryArgs<RecipeLogQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<RecipeLogQuery>({ query: RecipeLogDocument, ...options });
+};
+export const RenderRecipeLogDocument = gql`
+    query renderRecipeLog($id: String!) {
+  recipeLog(where: {id: $id}) {
+    id
+    render
+  }
+}
+    `;
+
+export function useRenderRecipeLogQuery(options: Omit<Urql.UseQueryArgs<RenderRecipeLogQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<RenderRecipeLogQuery>({ query: RenderRecipeLogDocument, ...options });
 };
 export const UpdateRecipeLogDocument = gql`
     mutation updateRecipeLog($id: String!, $title: String!, $body: Json!) {

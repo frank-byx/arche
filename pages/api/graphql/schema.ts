@@ -10,6 +10,15 @@ const RecipeLog = objectType({
     t.model.body()
     t.model.createdAt()
     t.model.updatedAt()
+    t.field("render", {
+      type: "String",
+      async resolve(root, args, ctx) {
+        return ctx.renderRecipe({
+          title: root.title,
+          steps: JSON.parse(root.body).steps,
+        })
+      },
+    })
   },
 })
 

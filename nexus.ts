@@ -171,6 +171,7 @@ export interface NexusGenFieldTypes {
     body: NexusGenScalars['Json']; // Json!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
+    render: string | null; // String
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
@@ -190,6 +191,7 @@ export interface NexusGenFieldTypeNames {
     body: 'Json'
     createdAt: 'DateTime'
     id: 'String'
+    render: 'String'
     title: 'String'
     updatedAt: 'DateTime'
   }
