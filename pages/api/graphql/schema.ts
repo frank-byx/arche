@@ -2,8 +2,8 @@ import { makeSchema, mutationType, objectType, queryType } from "@nexus/schema"
 import { nexusSchemaPrisma } from "nexus-plugin-prisma/schema"
 import path from "path"
 
-const Recipe = objectType({
-  name: "Recipe",
+const RecipeLog = objectType({
+  name: "RecipeLog",
   definition(t) {
     t.model.id()
     t.model.title()
@@ -15,22 +15,22 @@ const Recipe = objectType({
 
 const Query = queryType({
   definition(t) {
-    t.crud.recipe()
-    t.crud.recipes({ filtering: true, ordering: true })
+    t.crud.recipeLog()
+    t.crud.recipeLogs({ filtering: true, ordering: true })
   },
 })
 
 const Mutation = mutationType({
   definition(t) {
-    t.crud.createOneRecipe()
-    t.crud.deleteOneRecipe()
-    t.crud.updateOneRecipe()
+    t.crud.createOneRecipeLog()
+    t.crud.deleteOneRecipeLog()
+    t.crud.updateOneRecipeLog()
   },
 })
 
 export const schema = makeSchema({
   types: {
-    Recipe,
+    RecipeLog,
     Query,
     Mutation,
   },

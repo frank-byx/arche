@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Dispatch } from "react"
 import {
   Typography,
   AppBar,
@@ -7,7 +7,6 @@ import {
   makeStyles,
   Theme,
   createStyles,
-  InputBase,
   Button,
 } from "@material-ui/core"
 import {
@@ -22,11 +21,11 @@ import {
 } from "@material-ui/icons"
 import clsx from "clsx"
 import {
-  useUpdateRecipeMutation,
-  useCreateRecipeMutation,
-  useDeleteRecipeMutation,
+  useUpdateRecipeLogMutation,
+  useCreateRecipeLogMutation,
+  useDeleteRecipeLogMutation,
 } from "../generated/graphql"
-import { Recipe } from "@prisma/client"
+import { Recipe, RecipeAction, defaultNewRecipe } from "../src/recipe"
 
 type Props = {
   drawerIsOpen: boolean
@@ -36,11 +35,9 @@ type Props = {
   setCurrentRecipeID(currentRecipeID: string): any
   editMode: boolean
   setEditMode(editMode: boolean): any
-  editedTitle: string
-  setEditedTitle(editedTitle: string): any
-  editedBody: string
-  setEditedBody(editedBody: string): any
-  currentRecipeInfo: Recipe
+  editedRecipe: Recipe
+  editedRecipeDispatch: Dispatch<RecipeAction>
+  currentRecipe: Recipe
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -67,9 +64,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function RecipeEditorAppBar(props: Props) {
   const classes = useStyles(props)
-  const [updateRecipeResults, updateRecipe] = useUpdateRecipeMutation()
-  const [createRecipeResults, createRecipe] = useCreateRecipeMutation()
-  const [deleteRecipeResults, deleteRecipe] = useDeleteRecipeMutation()
+  const [updateRecipeLogResults, updateRecipeLog] = useUpdateRecipeLogMutation()
+  const [createRecipeLogResults, createRecipeLog] = useCreateRecipeLogMutation()
+  const [deleteRecipeLogResults, deleteRecipeLog] = useDeleteRecipeLogMutation()
   return (
     <AppBar
       position="fixed"
@@ -110,29 +107,21 @@ export default function RecipeEditorAppBar(props: Props) {
             variant="outlined"
             color="inherit"
             onClick={() => {
-              createRecipe({
-                title: "New Recipe",
-                body: "",
-              }).then((results) => {})
+              createRecipeLog({
+                title: defaultNewRecipe().title,
+                body: JSON.stringify({ steps: defaultNewRecipe().steps }),
+              }) //.then((results) => { <switch display to new recipe> })
             }}
           >
             New Recipe
           </Button>
         </div>
-        <Typography className={props.editMode ? classes.hide : undefined}>
-          {props.currentRecipeID && props.currentRecipeInfo
-            ? props.currentRecipeInfo.title
+        <Typography>
+          {props.currentRecipeID && props.currentRecipe
+            ? props.currentRecipe.title
             : ""}
         </Typography>
-        <InputBase
-          value={props.editedTitle}
-          onChange={(event) => {
-            props.setEditedTitle(event.target.value)
-          }}
-          className={!props.editMode ? classes.hide : undefined}
-          inputProps={{ style: { color: "white" } }}
-        />
-        <div className={!props.currentRecipeInfo ? classes.hide : undefined}>
+        <div className={!props.currentRecipe ? classes.hide : undefined}>
           <div className={props.editMode ? classes.hide : undefined}>
             <IconButton color="inherit">
               <Info />
@@ -140,8 +129,10 @@ export default function RecipeEditorAppBar(props: Props) {
             <IconButton
               color="inherit"
               onClick={() => {
-                props.setEditedTitle(props.currentRecipeInfo.title)
-                props.setEditedBody(props.currentRecipeInfo.body)
+                props.editedRecipeDispatch({
+                  type: "setRecipe",
+                  newRecipe: props.currentRecipe,
+                })
                 props.setEditMode(true)
               }}
             >
@@ -150,7 +141,7 @@ export default function RecipeEditorAppBar(props: Props) {
             <IconButton
               color="inherit"
               onClick={() => {
-                deleteRecipe({ id: props.currentRecipeID }).then(() => {
+                deleteRecipeLog({ id: props.currentRecipeID }).then(() => {
                   props.setCurrentRecipeID("")
                 })
               }}
@@ -170,10 +161,10 @@ export default function RecipeEditorAppBar(props: Props) {
             <IconButton
               color="inherit"
               onClick={() => {
-                updateRecipe({
+                updateRecipeLog({
                   id: props.currentRecipeID,
-                  title: props.editedTitle,
-                  body: props.editedBody,
+                  title: props.editedRecipe.title,
+                  body: JSON.stringify({ steps: props.editedRecipe.steps }),
                 })
                 props.setEditMode(false)
               }}

@@ -7,7 +7,7 @@ import {
   makeStyles,
   Theme,
 } from "@material-ui/core"
-import { useRecipeSearchQuery } from "../generated/graphql"
+import { useRecipeLogSearchQuery } from "../generated/graphql"
 
 type Props = {
   setEditMode(editMode: boolean): any
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function RecipeList(props: Props) {
   const classes = useStyles(props)
-  const [recipeSearchResults] = useRecipeSearchQuery({
+  const [recipeLogSearchResults] = useRecipeLogSearchQuery({
     variables: { contains: props.searchString },
   })
   const handleItemClick = (recipeID: string) => {
@@ -37,7 +37,7 @@ export default function RecipeList(props: Props) {
   return (
     <div className={classes.recipeList}>
       <List>
-        {recipeSearchResults.data?.recipes.map((recipe) => (
+        {recipeLogSearchResults.data?.recipeLogs.map((recipe) => (
           <ListItem
             button
             key={recipe.id}

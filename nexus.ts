@@ -55,38 +55,37 @@ export interface NexusGenInputs {
     notIn?: string[] | null; // [String!]
     startsWith?: string | null; // String
   }
-  RecipeCreateInput: { // input type
-    body: string; // String!
+  RecipeLogCreateInput: { // input type
+    body: NexusGenScalars['Json']; // Json!
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     title: string; // String!
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
-  RecipeOrderByInput: { // input type
+  RecipeLogOrderByInput: { // input type
     body?: NexusGenEnums['SortOrder'] | null; // SortOrder
     createdAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
     title?: NexusGenEnums['SortOrder'] | null; // SortOrder
     updatedAt?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
-  RecipeUpdateInput: { // input type
-    body?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+  RecipeLogUpdateInput: { // input type
+    body?: NexusGenScalars['Json'] | null; // Json
     createdAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     title?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
     updatedAt?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
   }
-  RecipeWhereInput: { // input type
-    AND?: NexusGenInputs['RecipeWhereInput'][] | null; // [RecipeWhereInput!]
-    body?: NexusGenInputs['StringFilter'] | null; // StringFilter
+  RecipeLogWhereInput: { // input type
+    AND?: NexusGenInputs['RecipeLogWhereInput'][] | null; // [RecipeLogWhereInput!]
     createdAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    NOT?: NexusGenInputs['RecipeWhereInput'][] | null; // [RecipeWhereInput!]
-    OR?: NexusGenInputs['RecipeWhereInput'][] | null; // [RecipeWhereInput!]
+    NOT?: NexusGenInputs['RecipeLogWhereInput'][] | null; // [RecipeLogWhereInput!]
+    OR?: NexusGenInputs['RecipeLogWhereInput'][] | null; // [RecipeLogWhereInput!]
     title?: NexusGenInputs['StringFilter'] | null; // StringFilter
     updatedAt?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
   }
-  RecipeWhereUniqueInput: { // input type
+  RecipeLogWhereUniqueInput: { // input type
     id?: string | null; // String
   }
   StringFieldUpdateOperationsInput: { // input type
@@ -120,13 +119,14 @@ export interface NexusGenScalars {
   Boolean: boolean
   ID: string
   DateTime: any
+  Json: any
 }
 
 export interface NexusGenRootTypes {
   Mutation: {};
   Query: {};
-  Recipe: { // root type
-    body: string; // String!
+  RecipeLog: { // root type
+    body: NexusGenScalars['Json']; // Json!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     title: string; // String!
@@ -139,11 +139,11 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   DateTimeFilter: NexusGenInputs['DateTimeFilter'];
   NestedDateTimeFilter: NexusGenInputs['NestedDateTimeFilter'];
   NestedStringFilter: NexusGenInputs['NestedStringFilter'];
-  RecipeCreateInput: NexusGenInputs['RecipeCreateInput'];
-  RecipeOrderByInput: NexusGenInputs['RecipeOrderByInput'];
-  RecipeUpdateInput: NexusGenInputs['RecipeUpdateInput'];
-  RecipeWhereInput: NexusGenInputs['RecipeWhereInput'];
-  RecipeWhereUniqueInput: NexusGenInputs['RecipeWhereUniqueInput'];
+  RecipeLogCreateInput: NexusGenInputs['RecipeLogCreateInput'];
+  RecipeLogOrderByInput: NexusGenInputs['RecipeLogOrderByInput'];
+  RecipeLogUpdateInput: NexusGenInputs['RecipeLogUpdateInput'];
+  RecipeLogWhereInput: NexusGenInputs['RecipeLogWhereInput'];
+  RecipeLogWhereUniqueInput: NexusGenInputs['RecipeLogWhereUniqueInput'];
   StringFieldUpdateOperationsInput: NexusGenInputs['StringFieldUpdateOperationsInput'];
   StringFilter: NexusGenInputs['StringFilter'];
   QueryMode: NexusGenEnums['QueryMode'];
@@ -154,20 +154,21 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   Boolean: NexusGenScalars['Boolean'];
   ID: NexusGenScalars['ID'];
   DateTime: NexusGenScalars['DateTime'];
+  Json: NexusGenScalars['Json'];
 }
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
-    createOneRecipe: NexusGenRootTypes['Recipe']; // Recipe!
-    deleteOneRecipe: NexusGenRootTypes['Recipe'] | null; // Recipe
-    updateOneRecipe: NexusGenRootTypes['Recipe'] | null; // Recipe
+    createOneRecipeLog: NexusGenRootTypes['RecipeLog']; // RecipeLog!
+    deleteOneRecipeLog: NexusGenRootTypes['RecipeLog'] | null; // RecipeLog
+    updateOneRecipeLog: NexusGenRootTypes['RecipeLog'] | null; // RecipeLog
   }
   Query: { // field return type
-    recipe: NexusGenRootTypes['Recipe'] | null; // Recipe
-    recipes: NexusGenRootTypes['Recipe'][]; // [Recipe!]!
+    recipeLog: NexusGenRootTypes['RecipeLog'] | null; // RecipeLog
+    recipeLogs: NexusGenRootTypes['RecipeLog'][]; // [RecipeLog!]!
   }
-  Recipe: { // field return type
-    body: string; // String!
+  RecipeLog: { // field return type
+    body: NexusGenScalars['Json']; // Json!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     title: string; // String!
@@ -177,16 +178,16 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
-    createOneRecipe: 'Recipe'
-    deleteOneRecipe: 'Recipe'
-    updateOneRecipe: 'Recipe'
+    createOneRecipeLog: 'RecipeLog'
+    deleteOneRecipeLog: 'RecipeLog'
+    updateOneRecipeLog: 'RecipeLog'
   }
   Query: { // field return type name
-    recipe: 'Recipe'
-    recipes: 'Recipe'
+    recipeLog: 'RecipeLog'
+    recipeLogs: 'RecipeLog'
   }
-  Recipe: { // field return type name
-    body: 'String'
+  RecipeLog: { // field return type name
+    body: 'Json'
     createdAt: 'DateTime'
     id: 'String'
     title: 'String'
@@ -196,28 +197,28 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    createOneRecipe: { // args
-      data: NexusGenInputs['RecipeCreateInput']; // RecipeCreateInput!
+    createOneRecipeLog: { // args
+      data: NexusGenInputs['RecipeLogCreateInput']; // RecipeLogCreateInput!
     }
-    deleteOneRecipe: { // args
-      where: NexusGenInputs['RecipeWhereUniqueInput']; // RecipeWhereUniqueInput!
+    deleteOneRecipeLog: { // args
+      where: NexusGenInputs['RecipeLogWhereUniqueInput']; // RecipeLogWhereUniqueInput!
     }
-    updateOneRecipe: { // args
-      data: NexusGenInputs['RecipeUpdateInput']; // RecipeUpdateInput!
-      where: NexusGenInputs['RecipeWhereUniqueInput']; // RecipeWhereUniqueInput!
+    updateOneRecipeLog: { // args
+      data: NexusGenInputs['RecipeLogUpdateInput']; // RecipeLogUpdateInput!
+      where: NexusGenInputs['RecipeLogWhereUniqueInput']; // RecipeLogWhereUniqueInput!
     }
   }
   Query: {
-    recipe: { // args
-      where: NexusGenInputs['RecipeWhereUniqueInput']; // RecipeWhereUniqueInput!
+    recipeLog: { // args
+      where: NexusGenInputs['RecipeLogWhereUniqueInput']; // RecipeLogWhereUniqueInput!
     }
-    recipes: { // args
-      after?: NexusGenInputs['RecipeWhereUniqueInput'] | null; // RecipeWhereUniqueInput
-      before?: NexusGenInputs['RecipeWhereUniqueInput'] | null; // RecipeWhereUniqueInput
+    recipeLogs: { // args
+      after?: NexusGenInputs['RecipeLogWhereUniqueInput'] | null; // RecipeLogWhereUniqueInput
+      before?: NexusGenInputs['RecipeLogWhereUniqueInput'] | null; // RecipeLogWhereUniqueInput
       first?: number | null; // Int
       last?: number | null; // Int
-      orderBy?: NexusGenInputs['RecipeOrderByInput'][] | null; // [RecipeOrderByInput!]
-      where?: NexusGenInputs['RecipeWhereInput'] | null; // RecipeWhereInput
+      orderBy?: NexusGenInputs['RecipeLogOrderByInput'][] | null; // [RecipeLogOrderByInput!]
+      where?: NexusGenInputs['RecipeLogWhereInput'] | null; // RecipeLogWhereInput
     }
   }
 }
@@ -227,15 +228,15 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "Mutation" | "Query" | "Recipe";
+export type NexusGenObjectNames = "Mutation" | "Query" | "RecipeLog";
 
-export type NexusGenInputNames = "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "NestedDateTimeFilter" | "NestedStringFilter" | "RecipeCreateInput" | "RecipeOrderByInput" | "RecipeUpdateInput" | "RecipeWhereInput" | "RecipeWhereUniqueInput" | "StringFieldUpdateOperationsInput" | "StringFilter";
+export type NexusGenInputNames = "DateTimeFieldUpdateOperationsInput" | "DateTimeFilter" | "NestedDateTimeFilter" | "NestedStringFilter" | "RecipeLogCreateInput" | "RecipeLogOrderByInput" | "RecipeLogUpdateInput" | "RecipeLogWhereInput" | "RecipeLogWhereUniqueInput" | "StringFieldUpdateOperationsInput" | "StringFilter";
 
 export type NexusGenEnumNames = "QueryMode" | "SortOrder";
 
 export type NexusGenInterfaceNames = never;
 
-export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "String";
+export type NexusGenScalarNames = "Boolean" | "DateTime" | "Float" | "ID" | "Int" | "Json" | "String";
 
 export type NexusGenUnionNames = never;
 

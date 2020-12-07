@@ -1,8 +1,8 @@
 import gql from "graphql-tag"
 
-const RecipeSearchQuery = gql`
-  query recipeSearch($contains: String!) {
-    recipes(
+const RecipeLogSearchQuery = gql`
+  query recipeLogSearch($contains: String!) {
+    recipeLogs(
       where: { title: { contains: $contains } }
       orderBy: { updatedAt: desc }
     ) {
@@ -12,9 +12,9 @@ const RecipeSearchQuery = gql`
   }
 `
 
-const RecipeInfoQuery = gql`
-  query recipeInfo($id: String!) {
-    recipe(where: { id: $id }) {
+const RecipeLogQuery = gql`
+  query recipeLog($id: String!) {
+    recipeLog(where: { id: $id }) {
       id
       title
       body
@@ -24,11 +24,11 @@ const RecipeInfoQuery = gql`
   }
 `
 
-const UpdateRecipeMutation = gql`
-  mutation updateRecipe($id: String!, $title: String!, $body: String!) {
-    updateOneRecipe(
+const UpdateRecipeLogMutation = gql`
+  mutation updateRecipeLog($id: String!, $title: String!, $body: Json!) {
+    updateOneRecipeLog(
       where: { id: $id }
-      data: { title: { set: $title }, body: { set: $body } }
+      data: { title: { set: $title }, body: $body }
     ) {
       id
       updatedAt
@@ -36,18 +36,18 @@ const UpdateRecipeMutation = gql`
   }
 `
 
-const CreateRecipeMutation = gql`
-  mutation createRecipe($title: String!, $body: String!) {
-    createOneRecipe(data: { title: $title, body: $body }) {
+const CreateRecipeLogMutation = gql`
+  mutation createRecipeLog($title: String!, $body: Json!) {
+    createOneRecipeLog(data: { title: $title, body: $body }) {
       id
       createdAt
     }
   }
 `
 
-const DeleteRecipeMutation = gql`
-  mutation deleteRecipe($id: String!) {
-    deleteOneRecipe(where: { id: $id }) {
+const DeleteRecipeLogMutation = gql`
+  mutation deleteRecipeLog($id: String!) {
+    deleteOneRecipeLog(where: { id: $id }) {
       id
     }
   }

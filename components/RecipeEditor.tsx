@@ -1,15 +1,14 @@
 import React from "react"
-import {
-  Typography,
-  makeStyles,
-  Theme,
-  createStyles,
-  InputBase,
-} from "@material-ui/core"
+import { Typography, makeStyles, Theme, createStyles } from "@material-ui/core"
 import clsx from "clsx"
-import { useRecipeInfoQuery } from "../generated/graphql"
+import { useRecipeLogQuery } from "../generated/graphql"
 
 import RecipeEditorAppBar from "../components/RecipeEditorAppBar"
+import useRecipeReducer, {
+  parseRecipeLogQueryResults,
+  Recipe,
+} from "../src/recipe"
+import RecipeInput from "./RecipeInput"
 
 type Props = {
   drawerIsOpen: boolean
@@ -32,24 +31,23 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
-      marginLeft: (props: Props) => -props.drawerWidth,
     },
     contentShift: {
-      marginLeft: 0,
+      marginLeft: (props: Props) => -props.drawerWidth,
     },
   })
 )
 
 export default function RecipeEditor(props: Props) {
-  const classes = useStyles()
+  const classes = useStyles(props)
 
-  const [editedTitle, setEditedTitle] = React.useState("")
-  const [editedBody, setEditedBody] = React.useState("")
+  const currentRecipe: Recipe = parseRecipeLogQueryResults(
+    useRecipeLogQuery({
+      variables: { id: props.currentRecipeID },
+    })
+  )
 
-  const [recipeInfoResults] = useRecipeInfoQuery({
-    variables: { id: props.currentRecipeID },
-  })
-  const currentRecipeInfo = recipeInfoResults.data?.recipe
+  const [editedRecipe, editedRecipeDispatch] = useRecipeReducer()
 
   const recipeEditorAppBarProps = {
     drawerIsOpen: props.drawerIsOpen,
@@ -59,11 +57,14 @@ export default function RecipeEditor(props: Props) {
     setCurrentRecipeID: props.setCurrentRecipeID,
     editMode: props.editMode,
     setEditMode: props.setEditMode,
-    editedTitle,
-    setEditedTitle,
-    editedBody,
-    setEditedBody,
-    currentRecipeInfo,
+    editedRecipe,
+    editedRecipeDispatch,
+    currentRecipe,
+  }
+
+  const recipeInputProps = {
+    editedRecipe,
+    editedRecipeDispatch,
   }
 
   return (
@@ -71,23 +72,15 @@ export default function RecipeEditor(props: Props) {
       <RecipeEditorAppBar {...recipeEditorAppBarProps} />
       <div
         className={clsx(classes.content, {
-          [classes.contentShift]: props.drawerIsOpen,
+          [classes.contentShift]: !props.drawerIsOpen,
         })}
       >
         <div className={classes.appBarPlaceholder} />
-        <InputBase
-          value={editedBody}
-          onChange={(event) => {
-            setEditedBody(event.target.value)
-          }}
-          fullWidth
-          multiline
-          className={!props.editMode ? classes.hide : undefined}
-        />
+        <div className={!props.editMode ? classes.hide : undefined}>
+          <RecipeInput {...recipeInputProps} />
+        </div>
         <Typography className={props.editMode ? classes.hide : undefined}>
-          {props.currentRecipeID && currentRecipeInfo
-            ? currentRecipeInfo.body
-            : ""}
+          {props.currentRecipeID ? JSON.stringify(currentRecipe) : ""}
         </Typography>
       </div>
     </>

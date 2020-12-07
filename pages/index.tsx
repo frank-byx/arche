@@ -20,7 +20,7 @@ export default function Home() {
           style={{ minHeight: "100vh" }}
         >
           <Grid item>
-            <Link href="/recipeLog">
+            <Link href="/recipeLogger">
               <Button
                 variant="contained"
                 color="primary"

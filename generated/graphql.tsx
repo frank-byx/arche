@@ -10,79 +10,80 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Json: any;
   DateTime: any;
 };
 
-export type Recipe = {
-  __typename?: 'Recipe';
+export type RecipeLog = {
+  __typename?: 'RecipeLog';
   id: Scalars['String'];
   title: Scalars['String'];
-  body: Scalars['String'];
+  body: Scalars['Json'];
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  recipe?: Maybe<Recipe>;
-  recipes: Array<Recipe>;
+  recipeLog?: Maybe<RecipeLog>;
+  recipeLogs: Array<RecipeLog>;
 };
 
 
-export type QueryRecipeArgs = {
-  where: RecipeWhereUniqueInput;
+export type QueryRecipeLogArgs = {
+  where: RecipeLogWhereUniqueInput;
 };
 
 
-export type QueryRecipesArgs = {
-  where?: Maybe<RecipeWhereInput>;
-  orderBy?: Maybe<Array<RecipeOrderByInput>>;
+export type QueryRecipeLogsArgs = {
+  where?: Maybe<RecipeLogWhereInput>;
+  orderBy?: Maybe<Array<RecipeLogOrderByInput>>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
-  before?: Maybe<RecipeWhereUniqueInput>;
-  after?: Maybe<RecipeWhereUniqueInput>;
+  before?: Maybe<RecipeLogWhereUniqueInput>;
+  after?: Maybe<RecipeLogWhereUniqueInput>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createOneRecipe: Recipe;
-  deleteOneRecipe?: Maybe<Recipe>;
-  updateOneRecipe?: Maybe<Recipe>;
+  createOneRecipeLog: RecipeLog;
+  deleteOneRecipeLog?: Maybe<RecipeLog>;
+  updateOneRecipeLog?: Maybe<RecipeLog>;
 };
 
 
-export type MutationCreateOneRecipeArgs = {
-  data: RecipeCreateInput;
+export type MutationCreateOneRecipeLogArgs = {
+  data: RecipeLogCreateInput;
 };
 
 
-export type MutationDeleteOneRecipeArgs = {
-  where: RecipeWhereUniqueInput;
+export type MutationDeleteOneRecipeLogArgs = {
+  where: RecipeLogWhereUniqueInput;
 };
 
 
-export type MutationUpdateOneRecipeArgs = {
-  data: RecipeUpdateInput;
-  where: RecipeWhereUniqueInput;
+export type MutationUpdateOneRecipeLogArgs = {
+  data: RecipeLogUpdateInput;
+  where: RecipeLogWhereUniqueInput;
 };
 
 
-export type RecipeWhereUniqueInput = {
+
+export type RecipeLogWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
 };
 
-export type RecipeWhereInput = {
-  AND?: Maybe<Array<RecipeWhereInput>>;
-  OR?: Maybe<Array<RecipeWhereInput>>;
-  NOT?: Maybe<Array<RecipeWhereInput>>;
+export type RecipeLogWhereInput = {
+  AND?: Maybe<Array<RecipeLogWhereInput>>;
+  OR?: Maybe<Array<RecipeLogWhereInput>>;
+  NOT?: Maybe<Array<RecipeLogWhereInput>>;
   id?: Maybe<StringFilter>;
   title?: Maybe<StringFilter>;
-  body?: Maybe<StringFilter>;
   createdAt?: Maybe<DateTimeFilter>;
   updatedAt?: Maybe<DateTimeFilter>;
 };
 
-export type RecipeOrderByInput = {
+export type RecipeLogOrderByInput = {
   id?: Maybe<SortOrder>;
   title?: Maybe<SortOrder>;
   body?: Maybe<SortOrder>;
@@ -90,18 +91,18 @@ export type RecipeOrderByInput = {
   updatedAt?: Maybe<SortOrder>;
 };
 
-export type RecipeCreateInput = {
+export type RecipeLogCreateInput = {
   id?: Maybe<Scalars['String']>;
   title: Scalars['String'];
-  body: Scalars['String'];
+  body: Scalars['Json'];
   createdAt?: Maybe<Scalars['DateTime']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type RecipeUpdateInput = {
+export type RecipeLogUpdateInput = {
   id?: Maybe<StringFieldUpdateOperationsInput>;
   title?: Maybe<StringFieldUpdateOperationsInput>;
-  body?: Maybe<StringFieldUpdateOperationsInput>;
+  body?: Maybe<Scalars['Json']>;
   createdAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
   updatedAt?: Maybe<DateTimeFieldUpdateOperationsInput>;
 };
@@ -175,90 +176,90 @@ export type NestedDateTimeFilter = {
   not?: Maybe<NestedDateTimeFilter>;
 };
 
-export type RecipeSearchQueryVariables = Exact<{
+export type RecipeLogSearchQueryVariables = Exact<{
   contains: Scalars['String'];
 }>;
 
 
-export type RecipeSearchQuery = (
+export type RecipeLogSearchQuery = (
   { __typename?: 'Query' }
-  & { recipes: Array<(
-    { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id' | 'title'>
+  & { recipeLogs: Array<(
+    { __typename?: 'RecipeLog' }
+    & Pick<RecipeLog, 'id' | 'title'>
   )> }
 );
 
-export type RecipeInfoQueryVariables = Exact<{
+export type RecipeLogQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type RecipeInfoQuery = (
+export type RecipeLogQuery = (
   { __typename?: 'Query' }
-  & { recipe?: Maybe<(
-    { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id' | 'title' | 'body' | 'createdAt' | 'updatedAt'>
+  & { recipeLog?: Maybe<(
+    { __typename?: 'RecipeLog' }
+    & Pick<RecipeLog, 'id' | 'title' | 'body' | 'createdAt' | 'updatedAt'>
   )> }
 );
 
-export type UpdateRecipeMutationVariables = Exact<{
+export type UpdateRecipeLogMutationVariables = Exact<{
   id: Scalars['String'];
   title: Scalars['String'];
-  body: Scalars['String'];
+  body: Scalars['Json'];
 }>;
 
 
-export type UpdateRecipeMutation = (
+export type UpdateRecipeLogMutation = (
   { __typename?: 'Mutation' }
-  & { updateOneRecipe?: Maybe<(
-    { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id' | 'updatedAt'>
+  & { updateOneRecipeLog?: Maybe<(
+    { __typename?: 'RecipeLog' }
+    & Pick<RecipeLog, 'id' | 'updatedAt'>
   )> }
 );
 
-export type CreateRecipeMutationVariables = Exact<{
+export type CreateRecipeLogMutationVariables = Exact<{
   title: Scalars['String'];
-  body: Scalars['String'];
+  body: Scalars['Json'];
 }>;
 
 
-export type CreateRecipeMutation = (
+export type CreateRecipeLogMutation = (
   { __typename?: 'Mutation' }
-  & { createOneRecipe: (
-    { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id' | 'createdAt'>
+  & { createOneRecipeLog: (
+    { __typename?: 'RecipeLog' }
+    & Pick<RecipeLog, 'id' | 'createdAt'>
   ) }
 );
 
-export type DeleteRecipeMutationVariables = Exact<{
+export type DeleteRecipeLogMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type DeleteRecipeMutation = (
+export type DeleteRecipeLogMutation = (
   { __typename?: 'Mutation' }
-  & { deleteOneRecipe?: Maybe<(
-    { __typename?: 'Recipe' }
-    & Pick<Recipe, 'id'>
+  & { deleteOneRecipeLog?: Maybe<(
+    { __typename?: 'RecipeLog' }
+    & Pick<RecipeLog, 'id'>
   )> }
 );
 
 
-export const RecipeSearchDocument = gql`
-    query recipeSearch($contains: String!) {
-  recipes(where: {title: {contains: $contains}}, orderBy: {updatedAt: desc}) {
+export const RecipeLogSearchDocument = gql`
+    query recipeLogSearch($contains: String!) {
+  recipeLogs(where: {title: {contains: $contains}}, orderBy: {updatedAt: desc}) {
     id
     title
   }
 }
     `;
 
-export function useRecipeSearchQuery(options: Omit<Urql.UseQueryArgs<RecipeSearchQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<RecipeSearchQuery>({ query: RecipeSearchDocument, ...options });
+export function useRecipeLogSearchQuery(options: Omit<Urql.UseQueryArgs<RecipeLogSearchQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<RecipeLogSearchQuery>({ query: RecipeLogSearchDocument, ...options });
 };
-export const RecipeInfoDocument = gql`
-    query recipeInfo($id: String!) {
-  recipe(where: {id: $id}) {
+export const RecipeLogDocument = gql`
+    query recipeLog($id: String!) {
+  recipeLog(where: {id: $id}) {
     id
     title
     body
@@ -268,44 +269,41 @@ export const RecipeInfoDocument = gql`
 }
     `;
 
-export function useRecipeInfoQuery(options: Omit<Urql.UseQueryArgs<RecipeInfoQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<RecipeInfoQuery>({ query: RecipeInfoDocument, ...options });
+export function useRecipeLogQuery(options: Omit<Urql.UseQueryArgs<RecipeLogQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<RecipeLogQuery>({ query: RecipeLogDocument, ...options });
 };
-export const UpdateRecipeDocument = gql`
-    mutation updateRecipe($id: String!, $title: String!, $body: String!) {
-  updateOneRecipe(
-    where: {id: $id}
-    data: {title: {set: $title}, body: {set: $body}}
-  ) {
+export const UpdateRecipeLogDocument = gql`
+    mutation updateRecipeLog($id: String!, $title: String!, $body: Json!) {
+  updateOneRecipeLog(where: {id: $id}, data: {title: {set: $title}, body: $body}) {
     id
     updatedAt
   }
 }
     `;
 
-export function useUpdateRecipeMutation() {
-  return Urql.useMutation<UpdateRecipeMutation, UpdateRecipeMutationVariables>(UpdateRecipeDocument);
+export function useUpdateRecipeLogMutation() {
+  return Urql.useMutation<UpdateRecipeLogMutation, UpdateRecipeLogMutationVariables>(UpdateRecipeLogDocument);
 };
-export const CreateRecipeDocument = gql`
-    mutation createRecipe($title: String!, $body: String!) {
-  createOneRecipe(data: {title: $title, body: $body}) {
+export const CreateRecipeLogDocument = gql`
+    mutation createRecipeLog($title: String!, $body: Json!) {
+  createOneRecipeLog(data: {title: $title, body: $body}) {
     id
     createdAt
   }
 }
     `;
 
-export function useCreateRecipeMutation() {
-  return Urql.useMutation<CreateRecipeMutation, CreateRecipeMutationVariables>(CreateRecipeDocument);
+export function useCreateRecipeLogMutation() {
+  return Urql.useMutation<CreateRecipeLogMutation, CreateRecipeLogMutationVariables>(CreateRecipeLogDocument);
 };
-export const DeleteRecipeDocument = gql`
-    mutation deleteRecipe($id: String!) {
-  deleteOneRecipe(where: {id: $id}) {
+export const DeleteRecipeLogDocument = gql`
+    mutation deleteRecipeLog($id: String!) {
+  deleteOneRecipeLog(where: {id: $id}) {
     id
   }
 }
     `;
 
-export function useDeleteRecipeMutation() {
-  return Urql.useMutation<DeleteRecipeMutation, DeleteRecipeMutationVariables>(DeleteRecipeDocument);
+export function useDeleteRecipeLogMutation() {
+  return Urql.useMutation<DeleteRecipeLogMutation, DeleteRecipeLogMutationVariables>(DeleteRecipeLogDocument);
 };

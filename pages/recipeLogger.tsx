@@ -47,7 +47,7 @@ export default function RecipeLog() {
   return (
     <div>
       <Head>
-        <title>Recipe Log</title>
+        <title>Recipe Logger</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

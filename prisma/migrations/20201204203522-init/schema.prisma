@@ -10,10 +10,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Recipe {
+model RecipeLog {
     id         String    @id @default(cuid())
     title      String    
-    body       String
+    body       Json
     createdAt  DateTime  @default(now())
     updatedAt  DateTime  @updatedAt
 }

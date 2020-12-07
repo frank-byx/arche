@@ -19,10 +19,12 @@ input DateTimeFilter {
   notIn: [DateTime!]
 }
 
+scalar Json
+
 type Mutation {
-  createOneRecipe(data: RecipeCreateInput!): Recipe!
-  deleteOneRecipe(where: RecipeWhereUniqueInput!): Recipe
-  updateOneRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
+  createOneRecipeLog(data: RecipeLogCreateInput!): RecipeLog!
+  deleteOneRecipeLog(where: RecipeLogWhereUniqueInput!): RecipeLog
+  updateOneRecipeLog(data: RecipeLogUpdateInput!, where: RecipeLogWhereUniqueInput!): RecipeLog
 }
 
 input NestedDateTimeFilter {
@@ -51,8 +53,8 @@ input NestedStringFilter {
 }
 
 type Query {
-  recipe(where: RecipeWhereUniqueInput!): Recipe
-  recipes(after: RecipeWhereUniqueInput, before: RecipeWhereUniqueInput, first: Int, last: Int, orderBy: [RecipeOrderByInput!], where: RecipeWhereInput): [Recipe!]!
+  recipeLog(where: RecipeLogWhereUniqueInput!): RecipeLog
+  recipeLogs(after: RecipeLogWhereUniqueInput, before: RecipeLogWhereUniqueInput, first: Int, last: Int, orderBy: [RecipeLogOrderByInput!], where: RecipeLogWhereInput): [RecipeLog!]!
 }
 
 enum QueryMode {
@@ -60,23 +62,23 @@ enum QueryMode {
   insensitive
 }
 
-type Recipe {
-  body: String!
+type RecipeLog {
+  body: Json!
   createdAt: DateTime!
   id: String!
   title: String!
   updatedAt: DateTime!
 }
 
-input RecipeCreateInput {
-  body: String!
+input RecipeLogCreateInput {
+  body: Json!
   createdAt: DateTime
   id: String
   title: String!
   updatedAt: DateTime
 }
 
-input RecipeOrderByInput {
+input RecipeLogOrderByInput {
   body: SortOrder
   createdAt: SortOrder
   id: SortOrder
@@ -84,26 +86,25 @@ input RecipeOrderByInput {
   updatedAt: SortOrder
 }
 
-input RecipeUpdateInput {
-  body: StringFieldUpdateOperationsInput
+input RecipeLogUpdateInput {
+  body: Json
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   title: StringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
 }
 
-input RecipeWhereInput {
-  AND: [RecipeWhereInput!]
-  body: StringFilter
+input RecipeLogWhereInput {
+  AND: [RecipeLogWhereInput!]
   createdAt: DateTimeFilter
   id: StringFilter
-  NOT: [RecipeWhereInput!]
-  OR: [RecipeWhereInput!]
+  NOT: [RecipeLogWhereInput!]
+  OR: [RecipeLogWhereInput!]
   title: StringFilter
   updatedAt: DateTimeFilter
 }
 
-input RecipeWhereUniqueInput {
+input RecipeLogWhereUniqueInput {
   id: String
 }
 
