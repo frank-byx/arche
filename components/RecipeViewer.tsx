@@ -13,7 +13,9 @@ export default function RecipeViewer(props: Props) {
     variables: { id: props.currentRecipeID },
   })[0].data?.recipeLog?.render
 
-  return (
+  return props.currentRecipeID ? (
     <PdfViewer url={`data:application/pdf;base64,${currentRecipeRender}`} />
+  ) : (
+    <div />
   )
 }
