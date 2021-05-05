@@ -23,6 +23,7 @@ export default function RecipeLog() {
   const [drawerIsOpen, setDrawerIsOpen] = React.useState(true)
   const [editMode, setEditMode] = React.useState(false)
   const [currentRecipeID, setCurrentRecipeID] = React.useState("")
+  const [searchString, setSearchString] = React.useState("")
 
   const recipeDrawerProps = {
     drawerWidth: DRAWER_WIDTH,
@@ -32,6 +33,8 @@ export default function RecipeLog() {
     setCurrentRecipeID: setCurrentRecipeID,
     drawerIsOpen: drawerIsOpen,
     setDrawerIsOpen: setDrawerIsOpen,
+    searchString: searchString,
+    setSearchString: setSearchString,
   }
 
   const recipeEditorProps = {
@@ -42,6 +45,8 @@ export default function RecipeLog() {
     setCurrentRecipeID,
     editMode,
     setEditMode,
+    searchString: searchString,
+    setSearchString: setSearchString,
   }
 
   return (

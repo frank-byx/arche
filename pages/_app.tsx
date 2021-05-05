@@ -49,4 +49,5 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
 export default withUrqlClient((_ssrExchange, _ctx) => ({
   url: API_ENDPOINT,
   fetch,
+  requestPolicy: "cache-and-network",
 }))(MyApp)

@@ -19,6 +19,8 @@ type Props = {
   setCurrentRecipeID(currentRecipeID: string): any
   editMode: boolean
   setEditMode(editMode: boolean): any
+  searchString: string
+  setSearchString(newSearchString: string): any
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -61,6 +63,8 @@ export default function RecipeEditor(props: Props) {
     editedRecipe,
     editedRecipeDispatch,
     currentRecipe,
+    searchString: props.searchString,
+    setSearchString: props.setSearchString,
   }
 
   const recipeInputProps = {

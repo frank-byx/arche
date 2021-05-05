@@ -38,6 +38,8 @@ type Props = {
   editedRecipe: Recipe
   editedRecipeDispatch: Dispatch<RecipeAction>
   currentRecipe: Recipe
+  searchString: string
+  setSearchString(newSearchString: string): any
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -104,13 +106,18 @@ export default function RecipeEditorAppBar(props: Props) {
             <ChevronLeft />
           </IconButton>
           <Button
+            className={props.editMode ? classes.hide : undefined}
             variant="outlined"
             color="inherit"
             onClick={() => {
               createRecipeLog({
                 title: defaultNewRecipe().title,
                 body: JSON.stringify({ steps: defaultNewRecipe().steps }),
-              }) //.then((results) => { <switch display to new recipe> })
+              }).then((results) => {
+                props.setCurrentRecipeID(results.data?.createOneRecipeLog.id)
+                props.setSearchString(" ")
+                props.setSearchString("")
+              })
             }}
           >
             New Recipe
@@ -121,11 +128,14 @@ export default function RecipeEditorAppBar(props: Props) {
             ? props.currentRecipe.title
             : ""}
         </Typography>
-        <div className={!props.currentRecipe ? classes.hide : undefined}>
+        <div
+          className={
+            !props.currentRecipe || props.currentRecipeID == ""
+              ? classes.hide
+              : undefined
+          }
+        >
           <div className={props.editMode ? classes.hide : undefined}>
-            <IconButton color="inherit">
-              <Info />
-            </IconButton>
             <IconButton
               color="inherit"
               onClick={() => {
@@ -147,14 +157,6 @@ export default function RecipeEditorAppBar(props: Props) {
               }}
             >
               <Delete />
-            </IconButton>
-            <IconButton
-              color="inherit"
-              onClick={() => {
-                props.setCurrentRecipeID("")
-              }}
-            >
-              <Close />
             </IconButton>
           </div>
           <div className={!props.editMode ? classes.hide : undefined}>

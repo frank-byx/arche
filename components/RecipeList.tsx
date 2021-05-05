@@ -34,21 +34,23 @@ export default function RecipeList(props: Props) {
     props.setCurrentRecipeID(recipeID)
   }
 
+  var listItems = recipeLogSearchResults.data?.recipeLogs.map((recipe) =>
+    React.createElement(
+      ListItem,
+      {
+        button: true,
+        key: recipe.id,
+        onClick: () => {
+          handleItemClick(recipe.id)
+        },
+      },
+      <ListItemText primary={recipe.title} />
+    )
+  )
+
   return (
     <div className={classes.recipeList}>
-      <List>
-        {recipeLogSearchResults.data?.recipeLogs.map((recipe) => (
-          <ListItem
-            button
-            key={recipe.id}
-            onClick={() => {
-              handleItemClick(recipe.id)
-            }}
-          >
-            <ListItemText primary={recipe.title} />
-          </ListItem>
-        ))}
-      </List>
+      <List>{listItems}</List>
     </div>
   )
 }

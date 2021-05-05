@@ -11,6 +11,8 @@ type Props = {
   setCurrentRecipeID(currentRecipeID: string): any
   drawerIsOpen: boolean
   setDrawerIsOpen(drawerIsOpen: boolean): any
+  searchString: string
+  setSearchString(newSearchString: string): any
 }
 
 const useStyles = makeStyles(() =>
@@ -27,11 +29,10 @@ const useStyles = makeStyles(() =>
 
 export default function RecipeDrawer(props: Props) {
   const classes = useStyles(props)
-  const [searchString, setSearchString] = React.useState("")
 
   const searchBarProps = {
-    searchString,
-    setSearchString,
+    searchString: props.searchString,
+    setSearchString: props.setSearchString,
     drawerWidth: props.drawerWidth,
   }
 
@@ -40,7 +41,7 @@ export default function RecipeDrawer(props: Props) {
     setEditMode: props.setEditMode,
     currentRecipeID: props.currentRecipeID,
     setCurrentRecipeID: props.setCurrentRecipeID,
-    searchString: searchString,
+    searchString: props.searchString,
   }
 
   return (

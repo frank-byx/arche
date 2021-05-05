@@ -37,7 +37,7 @@ export default function Home() {
                 color="primary"
                 style={{ minWidth: "30vw" }}
               >
-                <h3>Flavor Combinator</h3>
+                <h3>Insights</h3>
               </Button>
             </Link>
           </Grid>
