@@ -1,20 +1,10 @@
-import {
-  RecipeLogCreateInput,
-  RecipeLogQuery,
-  RecipeLogUpdateInput,
-} from "../generated/graphql"
+import { RecipeLogQuery } from "../generated/graphql"
 import Urql from "urql"
 import { Dispatch, useReducer } from "react"
 
-export enum Units {
-  Grams = "g",
-  Kilograms = "kg",
-  Units = "",
-}
-
 export type Ingredient = {
   quantity: number
-  unit: Units
+  unit: string
   name: string
 }
 
@@ -31,7 +21,7 @@ export type Recipe = {
 function defaultNewIngredient(): Ingredient {
   return {
     quantity: 1,
-    unit: Units.Grams,
+    unit: "",
     name: "",
   }
 }
@@ -104,7 +94,7 @@ export type RecipeAction =
       type: "setIngredientUnit"
       stepIndex: number
       ingredientIndex: number
-      newUnit: Units
+      newUnit: string
     }
   | {
       type: "setIngredientName"

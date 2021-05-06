@@ -6,7 +6,7 @@ function generateLatex(recipe: Recipe): string {
     \\documentclass{article}
     \\usepackage[nonumber]{cuisine}
     \\usepackage[margin=0.5in]{geometry}
-    \\RecipeWidths{\\textwidth}{0cm}{1cm}{4cm}{1cm}{1cm}
+    \\RecipeWidths{\\textwidth}{0cm}{1cm}{4cm}{1cm}{2cm}
 
     \\begin{document}
     \\begin{recipe}{${recipe.title}}{}{}

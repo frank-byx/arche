@@ -14,9 +14,7 @@ import {
   Search,
   Edit,
   Save,
-  Close,
   Delete,
-  Info,
   Cancel,
 } from "@material-ui/icons"
 import clsx from "clsx"

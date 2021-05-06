@@ -1,18 +1,14 @@
 import {
   createStyles,
-  FormControl,
   Grid,
   IconButton,
-  InputLabel,
   makeStyles,
-  MenuItem,
-  Select,
   TextField,
   Theme,
 } from "@material-ui/core"
 import { Delete } from "@material-ui/icons"
 import React, { Dispatch } from "react"
-import { Ingredient, RecipeAction, Units } from "../src/recipe"
+import { Ingredient, RecipeAction } from "../src/recipe"
 
 type Props = {
   stepIndex: number
@@ -26,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     quantityTextField: {
       width: theme.spacing(15),
     },
-    unitSelect: {
+    unitTextField: {
       width: theme.spacing(20),
     },
     nameTextField: {
@@ -54,7 +50,7 @@ export default function IngredientInput(props: Props) {
       type: "setIngredientUnit",
       stepIndex: props.stepIndex,
       ingredientIndex: props.ingredientIndex,
-      newUnit: event.target.value as Units,
+      newUnit: event.target.value as string,
     })
   }
 
@@ -89,19 +85,13 @@ export default function IngredientInput(props: Props) {
       </Grid>
 
       <Grid item>
-        <FormControl variant="outlined">
-          <InputLabel>Units</InputLabel>
-          <Select
-            className={classes.unitSelect}
-            value={props.editedIngredient.unit}
-            onChange={handleChangeUnit}
-            label="Units"
-          >
-            <MenuItem value={Units.Grams}>Grams</MenuItem>
-            <MenuItem value={Units.Kilograms}>Kilograms</MenuItem>
-            <MenuItem value={Units.Units}>Units</MenuItem>
-          </Select>
-        </FormControl>
+        <TextField
+          className={classes.unitTextField}
+          variant="outlined"
+          label="Unit"
+          value={props.editedIngredient.unit}
+          onChange={handleChangeUnit}
+        />
       </Grid>
 
       <Grid item>
