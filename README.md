@@ -2,16 +2,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-Clone the repo
+Clone the repository.
 
 ```bash
 git clone https://github.com/frank-byx/arche.git
 ```
 
-Run docker-compose
+From the project directory, run `make help` to view commands.
 
-```bash
-docker-compose up
-```
-
-Navigate to [http://localhost:3000](http://localhost:3000) in your browser
+Run `make demo` to spin up the demo and navigate to [http://localhost:3000](http://localhost:3000) in your browser.
