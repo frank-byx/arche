@@ -26,7 +26,7 @@ export default function Home() {
                 color="primary"
                 style={{ minWidth: "30vw" }}
               >
-                <h3>Recipe Log</h3>
+                <h3>Recipe Logger</h3>
               </Button>
             </Link>
           </Grid>
