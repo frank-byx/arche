@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Arches</title>
+        <title>Arche</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -20,24 +20,16 @@ export default function Home() {
           style={{ minHeight: "100vh" }}
         >
           <Grid item>
+            <Typography variant="h1">Arche</Typography>
+          </Grid>
+          <Grid item>
             <Link href="/recipeLogger">
               <Button
                 variant="contained"
                 color="primary"
-                style={{ minWidth: "30vw" }}
+                style={{ minWidth: "10vw" }}
               >
                 <h3>Recipe Logger</h3>
-              </Button>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href="/">
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ minWidth: "30vw" }}
-              >
-                <h3>Insights</h3>
               </Button>
             </Link>
           </Grid>

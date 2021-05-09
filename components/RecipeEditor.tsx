@@ -10,6 +10,7 @@ import useRecipeReducer, {
 } from "../src/recipe"
 import RecipeInput from "./RecipeInput"
 import RecipeViewer from "./RecipeViewer"
+import RecipeInsights from "./RecipeInsights"
 
 type Props = {
   drawerIsOpen: boolean
@@ -21,6 +22,8 @@ type Props = {
   setEditMode(editMode: boolean): any
   searchString: string
   setSearchString(newSearchString: string): any
+  insightMode: boolean
+  setInsightMode(insightMode: boolean): any
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -65,6 +68,8 @@ export default function RecipeEditor(props: Props) {
     currentRecipe,
     searchString: props.searchString,
     setSearchString: props.setSearchString,
+    insightMode: props.insightMode,
+    setInsightMode: props.setInsightMode,
   }
 
   const recipeInputProps = {
@@ -73,6 +78,10 @@ export default function RecipeEditor(props: Props) {
   }
 
   const recipeViewerProps = {
+    currentRecipeID: props.currentRecipeID,
+  }
+
+  const recipeInsightsProps = {
     currentRecipeID: props.currentRecipeID,
   }
 
@@ -89,7 +98,12 @@ export default function RecipeEditor(props: Props) {
           <RecipeInput {...recipeInputProps} />
         </div>
         <div className={props.editMode ? classes.hide : undefined}>
-          <RecipeViewer {...recipeViewerProps} />
+          <div className={props.insightMode ? classes.hide : undefined}>
+            <RecipeViewer {...recipeViewerProps} />
+          </div>
+          <div className={!props.insightMode ? classes.hide : undefined}>
+            <RecipeInsights {...recipeInsightsProps} />
+          </div>
         </div>
       </div>
     </>

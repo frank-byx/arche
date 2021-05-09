@@ -16,6 +16,7 @@ import {
   Save,
   Delete,
   Cancel,
+  Info,
 } from "@material-ui/icons"
 import clsx from "clsx"
 import {
@@ -38,6 +39,8 @@ type Props = {
   currentRecipe: Recipe
   searchString: string
   setSearchString(newSearchString: string): any
+  insightMode: boolean
+  setInsightMode(insightMode: boolean): any
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -137,11 +140,20 @@ export default function RecipeEditorAppBar(props: Props) {
             <IconButton
               color="inherit"
               onClick={() => {
+                props.setInsightMode(!props.insightMode)
+              }}
+            >
+              <Info />
+            </IconButton>
+            <IconButton
+              color="inherit"
+              onClick={() => {
                 props.editedRecipeDispatch({
                   type: "setRecipe",
                   newRecipe: props.currentRecipe,
                 })
                 props.setEditMode(true)
+                props.setInsightMode(false)
               }}
             >
               <Edit />

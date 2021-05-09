@@ -1,5 +1,13 @@
 import gql from "graphql-tag"
 
+const AllRecipeBodiesQuery = gql`
+  query allRecipeBodies {
+    recipeLogs {
+      body
+    }
+  }
+`
+
 const RecipeLogSearchQuery = gql`
   query recipeLogSearch($contains: String!) {
     recipeLogs(

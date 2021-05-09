@@ -177,6 +177,17 @@ export type NestedDateTimeFilter = {
   not?: Maybe<NestedDateTimeFilter>;
 };
 
+export type AllRecipeBodiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllRecipeBodiesQuery = (
+  { __typename?: 'Query' }
+  & { recipeLogs: Array<(
+    { __typename?: 'RecipeLog' }
+    & Pick<RecipeLog, 'body'>
+  )> }
+);
+
 export type RecipeLogSearchQueryVariables = Exact<{
   contains: Scalars['String'];
 }>;
@@ -259,6 +270,17 @@ export type DeleteRecipeLogMutation = (
 );
 
 
+export const AllRecipeBodiesDocument = gql`
+    query allRecipeBodies {
+  recipeLogs {
+    body
+  }
+}
+    `;
+
+export function useAllRecipeBodiesQuery(options: Omit<Urql.UseQueryArgs<AllRecipeBodiesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<AllRecipeBodiesQuery>({ query: AllRecipeBodiesDocument, ...options });
+};
 export const RecipeLogSearchDocument = gql`
     query recipeLogSearch($contains: String!) {
   recipeLogs(where: {title: {contains: $contains}}, orderBy: {updatedAt: desc}) {
