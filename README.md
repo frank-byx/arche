@@ -6,7 +6,7 @@ Arche's recipe insights feature will then give you feedback on your recipe based
 
 ## Getting Started
 
-Ensure that you have [Docker](https://docs.docker.com/get-started/) installed.
+Ensure that you have [Docker](https://docs.docker.com/get-started/), [`docker-compose`](https://docs.docker.com/compose/install/), and [`make`](https://www.gnu.org/software/make/) installed.
 
 Clone this repository using the following command:
 
@@ -18,13 +18,13 @@ Navigate to the project directory and run `make help` to view commands.
 
 ## Demo
 
-Run `make up` to spin up the project. Wait until the console output prints
+Ensure that you have a stable internet connection. Then, run `make up` to spin up the project, or `sudo make up` if your Docker daemon must be run as a root user. Wait until the console output prints
 
 ```
 arche_app | ℹ Watching for changes...
 ```
 
-This may take several minutes to complete the first time. Then, run `make demo` in a new terminal to seed the database with demo recipes.
+This may take several minutes to complete the first time. Then, run `make demo` (or `sudo make demo`) in a new terminal to seed the database with demo recipes.
 
 Navigate to [http://localhost:3000](http://localhost:3000) in your browser and click on **Recipe Logger**. This page may take a while to load.
 
@@ -54,7 +54,7 @@ From the recipe viewer view, click on the insights button ('i' icon in the top r
 
 Clicking on the insights button again will return you to the recipe viewer.
 
-Run `make down` to stop the application.
+Run `make down` (or `sudo make down`) to stop the application.
 
 ## Design
 
